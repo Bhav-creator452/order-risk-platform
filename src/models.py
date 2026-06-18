@@ -5,6 +5,7 @@ class Customer:
     email: str
     country: str
     total_past_orders: int
+    account_age_days :int = 0
 
     def id_valid(self):
         if not isinstance(self.id, str) or not self.id.startswith("C"):
