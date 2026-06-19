@@ -1,0 +1,17 @@
+{
+    "customer" : {
+    "id":"C3",
+    "email":"c@test.com",
+    "country":"CA",
+    "total_past_orders":0,
+    "account_age_days":2
+},
+    "order": {
+    "id":"O3",
+    "amount":10000,
+    "currency": "CAD",
+    "shipping_country":"US",
+    "item_count": 15
+
+}
+}
