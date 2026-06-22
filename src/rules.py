@@ -29,7 +29,7 @@ class HighAmount(RiskRule):
 
 class AccountAge(RiskRule):
     def evaluate(self, order: Order) -> int:
-        if order.customer.account_age_days < 2:
+        if order.customer.account_age_days <= 2:
             logger.info(
                 f"AccountAgeRule fired for {order.customer.id} age= {order.customer.account_age_days} days"
             )
@@ -67,12 +67,6 @@ class LargeItemCount(RiskRule):
             Risk_points=2
             return Risk_points
         return 0
-# ALL_RULES: list[RiskRule] = [HighAmount(),
-#                             NewCustomer(),
-#                             CountryMismatch(),
-#                             InternationalShipping()
-#                             ]
-
 
 
 
