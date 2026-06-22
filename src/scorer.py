@@ -53,7 +53,7 @@ class RiskScorer:
         
         # Log the final score and label
         logger.info(
-            f"Order{order.id} scored - /nScore: {total_score}, Label: {risk_label}"
+            f"Order{order.id} scored - \nScore: {total_score}, Label: {risk_label}"
         
         )
         
