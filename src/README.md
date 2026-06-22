@@ -30,15 +30,15 @@ A simple rule-based fraud and risk scoring system built in Python.
 ## Run
 
 ```bash
-python cli.py json_samples/order_high_risk.json
+python cli.py json_samples/high_risk_order.json
 ```
 
 ## Sample Files
 
 ```text
-samples/order_low_risk.json
-samples/order_medium_risk.json
-samples/order_high_risk.json
+json_samples/low_risk_order.json
+json_samples/medium_risk_order.json
+json_samples/high_risk_order.json
 ```
 
 ## Requirements
