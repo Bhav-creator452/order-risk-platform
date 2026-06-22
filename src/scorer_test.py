@@ -55,7 +55,7 @@ order2 = Order(
     item_count=15,
     customer=customer2
 )
-scorer = RiskScorer(rules)
+
 score,label=scorer.score(order2)
 print("Risk Score of the Order is:",score)
 print("Label according to the Risk Score :", label)
@@ -77,7 +77,6 @@ order3 = Order(
     item_count=15,
     customer=customer3
 )
-scorer = RiskScorer(rules)
 score,label=scorer.score(order3)
 print("Risk Score of the Order is:",score)
 print("Label according to the Risk Score :", label)
