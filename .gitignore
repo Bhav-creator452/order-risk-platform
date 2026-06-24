@@ -7,3 +7,6 @@ __pycache__/
 
 #data 
 'data/'
+
+#cleaned CSV
+'notebooks/cleaned_data.csv'
