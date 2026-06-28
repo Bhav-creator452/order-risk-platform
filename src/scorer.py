@@ -1,6 +1,6 @@
 import logging
-from models import Order
-from rules import RiskRule
+from .models import Order
+from .rules import RiskRule
 
 logger = logging.getLogger(__name__)
 

@@ -1,8 +1,8 @@
 import logging
 from dataclasses import dataclass
-from models import Order 
+from .models import Order 
 from abc import ABC , abstractmethod
-logging.basicConfig(level=logging.INFO
+logging.basicConfig(level=logging.WARNING
                    ,format="%(asctime)s - %(levelname)s - %(message)s")
 
 logger=logging.getLogger(__name__)
@@ -37,14 +37,14 @@ class AccountAge(RiskRule):
             return Risk_points
         return 0
 
-class NewCustomer(RiskRule):
-    def evaluate(self,order: Order) -> int:
-        if order.customer.total_past_orders==0:
-            logger.info(
-            f"NewCustomerRisk fired for {order.customer.id}|{order.customer.email}")
-            Risk_points=1
-            return Risk_points
-        return 0
+# class NewCustomer(RiskRule):
+#     def evaluate(self,order: Order) -> int:
+#         if order.customer.total_past_orders==0:
+#             logger.info(
+#             f"NewCustomerRisk fired for {order.customer.id}|{order.customer.email}")
+#             Risk_points=1
+#             return Risk_points
+#         return 0
     
 class CountryMismatch(RiskRule):
     def evaluate(self,order:Order) -> int:
