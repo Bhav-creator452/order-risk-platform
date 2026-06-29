@@ -1,6 +1,6 @@
 import logging
 from dataclasses import dataclass
-from .models import Order 
+from models import Order 
 from abc import ABC , abstractmethod
 logging.basicConfig(level=logging.WARNING
                    ,format="%(asctime)s - %(levelname)s - %(message)s")
