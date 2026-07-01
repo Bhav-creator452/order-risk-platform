@@ -37,14 +37,14 @@ class AccountAge(RiskRule):
             return Risk_points
         return 0
 
-# class NewCustomer(RiskRule):
-#     def evaluate(self,order: Order) -> int:
-#         if order.customer.total_past_orders==0:
-#             logger.info(
-#             f"NewCustomerRisk fired for {order.customer.id}|{order.customer.email}")
-#             Risk_points=1
-#             return Risk_points
-#         return 0
+class NewCustomer(RiskRule):
+    def evaluate(self,order: Order) -> int:
+        if order.customer.total_past_orders==0:
+            logger.info(
+            f"NewCustomerRisk fired for {order.customer.id}|{order.customer.email}")
+            Risk_points=1
+            return Risk_points
+        return 0
     
 class CountryMismatch(RiskRule):
     def evaluate(self,order:Order) -> int:

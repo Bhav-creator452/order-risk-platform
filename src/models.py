@@ -5,7 +5,7 @@ class Customer:
     id: str
     email: Optional[str] = None
     country: Optional[str] = None
-    #total_past_orders: int=0
+    total_past_orders: int=0
     account_age_days :int = 0
 
     # def id_valid(self):
