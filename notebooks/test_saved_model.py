@@ -1,14 +1,23 @@
 
+from pathlib import Path
 import joblib
 
-# Load the saved model
-loaded_model = joblib.load("models/Random_Forest_model.joblib")
+# Get the folder where this script is located
+BASE_DIR = Path(__file__).resolve().parent
 
-# Load test data
-X_test = joblib.load("models/X_test.joblib")
+# Go to the project root
+PROJECT_ROOT = BASE_DIR.parent
 
-# Original model predictions (from the loaded model)
-loaded_predictions = loaded_model.predict(X_test.iloc[:5])
+# Models folder
+MODELS_DIR = PROJECT_ROOT / "models"
 
-print("Reloaded Model Predictions:", loaded_predictions)
+# Load model and test data
+loaded_model = joblib.load(MODELS_DIR / "Random_Forest_model.joblib")
+X_test = joblib.load(MODELS_DIR / "X_test.joblib")
+y_test = joblib.load(MODELS_DIR / "y_test.joblib")
 
+# Predict first five transactions
+predictions = loaded_model.predict(X_test.iloc[:5])
+
+print("Predictions:", predictions)
+print("Actual Labels:", y_test.iloc[:5].values)
