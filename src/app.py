@@ -4,10 +4,24 @@ from pydantic import BaseModel
 from src.predictor import FraudPredictor
 from src.preprocessing import FeaturePreprocessor
 
+from fastapi import Depends
+from src.auth import verify_api_key
+
+from fastapi import HTTPException
+
+import logging
+
 app = FastAPI(
     title="Order Risk Platform API",
     version="1.0.0"
 )
+
+logging.basicConfig(
+    level=logging.INFO,
+    format="%(asctime)s | %(levelname)s | %(message)s",
+)
+
+logger = logging.getLogger(__name__)
 
 class OrderRequest(BaseModel):
     transaction_amount: float
@@ -50,11 +64,38 @@ Accessing the /health endpoint returned an HTTP 200 response with the JSON objec
 '''
 
 @app.post("/score")
-def score_order(order: OrderRequest):
-    order_dict = order.model_dump()
+def score_order(
+    order: OrderRequest,
+    _: str = Depends(verify_api_key),
+):
+    """
+    Predict fraud risk for an order.
+    """
 
-    features = preprocessor.prepare(order_dict)
+    try:
 
-    prediction = predictor.score(features)
+        order_dict = order.model_dump()
 
-    return prediction
+        features = preprocessor.prepare(
+            order_dict
+        )
+
+        prediction = predictor.score(
+            features
+        )
+
+        return prediction
+
+    except HTTPException:
+        raise
+
+    except Exception:
+
+        logger.exception(
+            "Unexpected error while scoring order."
+        )
+
+        raise HTTPException(
+            status_code=500,
+            detail="Internal server error",
+        )
