@@ -7,9 +7,13 @@ methods for generating fraud predictions.
 
 from __future__ import annotations
 
-from pathlib import Path
 import joblib
 
+from src.config import (
+    MODEL_PATH,
+    FEATURE_NAMES_PATH,
+    SCALER_PATH,
+)
 
 class FraudPredictor:
     """
@@ -19,19 +23,11 @@ class FraudPredictor:
 
     def __init__(self) -> None:
 
-        project_root = Path(__file__).resolve().parent.parent
-        model_dir = project_root / "models"
+        self.model = joblib.load(MODEL_PATH)
 
-        self.model = joblib.load(
-            model_dir / "Random_Forest_model.joblib"
-        )
+        self.feature_names = joblib.load(FEATURE_NAMES_PATH)
 
-        self.feature_names = joblib.load(
-            model_dir / "feature_names.joblib"
-        )
-        self.scaler = joblib.load(
-            model_dir / "scaler.joblib"
-        )
+        self.scaler = joblib.load(SCALER_PATH)
         
         
 
