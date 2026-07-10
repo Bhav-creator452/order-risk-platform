@@ -10,3 +10,9 @@ __pycache__/
 
 #cleaned CSV
 'notebooks/cleaned_data.csv'
+
+.env
+
+__pycache__/
+
+*.pyc
