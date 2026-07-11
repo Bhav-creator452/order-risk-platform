@@ -19,7 +19,7 @@ api_key_header = APIKeyHeader(
 
 def verify_api_key(
     api_key: str = Depends(api_key_header),
-):
+) -> str:
     """
     Validate API key from request header.
     """
