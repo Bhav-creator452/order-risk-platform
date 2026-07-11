@@ -6,10 +6,10 @@ expected by the trained Random Forest model.
 """
 
 from __future__ import annotations
+from typing import Any
 
 import pandas as pd
 from sklearn.preprocessing import StandardScaler
-
 
 class FeaturePreprocessor:
     """
@@ -20,7 +20,10 @@ class FeaturePreprocessor:
         self.feature_names = feature_names
         self.scaler=scaler
 
-    def _rename_columns(self, df):
+    def _rename_columns(
+    self,
+    df: pd.DataFrame,
+    ) -> pd.DataFrame:
 
         column_mapping = {
             "transaction_amount": "Transaction Amount",
@@ -38,7 +41,7 @@ class FeaturePreprocessor:
 
         return df.rename(columns=column_mapping)
 
-    def prepare(self, order: dict) -> pd.DataFrame:
+    def prepare(self, order: dict[str,Any]) -> pd.DataFrame:
         """
         Complete preprocessing pipeline.
         """
@@ -67,7 +70,10 @@ class FeaturePreprocessor:
     # Feature Engineering
     # -------------------------------------------------------
 
-    def _create_date_features(self, df: pd.DataFrame) -> pd.DataFrame:
+    def _create_date_features(
+    self,
+    df: pd.DataFrame,
+    ) -> pd.DataFrame:
 
         df["Transaction Date"] = pd.to_datetime(df["Transaction Date"])
 
@@ -125,8 +131,6 @@ class FeaturePreprocessor:
             columns=categorical_columns,
             drop_first=False
         )
-
-
 
         return df
 

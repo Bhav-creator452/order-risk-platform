@@ -6,14 +6,20 @@ methods for generating fraud predictions.
 """
 
 from __future__ import annotations
+from typing import Any
 
 import joblib
 
+import pandas as pd
+
+from src.logger import logger
 from src.config import (
     MODEL_PATH,
     FEATURE_NAMES_PATH,
     SCALER_PATH,
 )
+
+logger.info("Loading Random Forest model...")
 
 class FraudPredictor:
     """
@@ -24,13 +30,13 @@ class FraudPredictor:
     def __init__(self) -> None:
 
         self.model = joblib.load(MODEL_PATH)
+        
+        logger.info("Random Forest model loaded successfully.")
 
         self.feature_names = joblib.load(FEATURE_NAMES_PATH)
 
         self.scaler = joblib.load(SCALER_PATH)
         
-        
-
     @property
     def expected_features(self) -> list[str]:
         """
@@ -39,7 +45,10 @@ class FraudPredictor:
 
         return self.feature_names
 
-    def predict(self, features):
+    def predict(
+    self,
+    features: pd.DataFrame,
+    ) -> int:
         """
         Predict fraud label.
 
@@ -58,7 +67,10 @@ class FraudPredictor:
 
         return int(prediction[0])
 
-    def predict_probability(self, features):
+    def predict_probability(
+    self,
+    features: pd.DataFrame,
+    ) -> float:
         """
         Predict fraud probability.
 
@@ -72,7 +84,10 @@ class FraudPredictor:
 
         return float(probabilities[0][1])
 
-    def score(self, features):
+    def score(
+    self,
+    features: pd.DataFrame,
+    ) -> dict[str,Any]:
         """
         Complete prediction.
 
