@@ -2,6 +2,7 @@ from datetime import date
 
 from pydantic import BaseModel
 from pydantic import Field
+from datetime import datetime
 
 from src.enums import (
     PaymentMethod,
@@ -47,10 +48,10 @@ class OrderRequest(BaseModel):
         example=14,
     )
 
-    transaction_date: date = Field(
+    transaction_date: datetime = Field(
         ...,
         description="Transaction date.",
-        example="2025-06-20",
+        example="2025-06-20 15:20:04",
     )
 
     payment_method: PaymentMethod = Field(
