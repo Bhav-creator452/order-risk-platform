@@ -105,3 +105,18 @@ class ScoreResponse(BaseModel):
         description="Probability that the order is fraudulent.",
         example=0.0842,
     )
+
+class BatchScoreRequest(BaseModel):
+    """
+    Request body for batch fraud scoring.
+    """
+
+    orders: list[OrderRequest]
+
+
+class BatchScoreResponse(BaseModel):
+    """
+    Response body for batch fraud scoring.
+    """
+
+    results: list[ScoreResponse]
