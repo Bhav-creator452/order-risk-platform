@@ -10,11 +10,15 @@ from src.auth import verify_api_key
 from src.schemas import (
     OrderRequest,
     ScoreResponse,
+    BatchScoreRequest,
+    BatchScoreResponse
 ) 
 from src.logger import logger
 
-from src.predictor import FraudPredictor
-from src.preprocessing import FeaturePreprocessor
+from src.services.scoring import (
+    score_single_order,
+    score_batch,
+)
 
 app = FastAPI(
     title = "Order Risk Platform API",
@@ -46,12 +50,6 @@ All requests to the `/score` endpoint require a valid `X-API-Key` header.
     
 )
 
-predictor = FraudPredictor()
-
-preprocessor = FeaturePreprocessor(
-    feature_names=predictor.expected_features,
-    scaler=predictor.scaler
-)
 
 @app.get(
     "/",
@@ -115,17 +113,7 @@ def score_order(
     """
 
     try:
-        order_dict = order.model_dump()
-
-        features = preprocessor.prepare(
-            order_dict
-        )
-
-        prediction = predictor.score(
-            features
-        )
-
-        return prediction
+        return score_single_order(order)
 
     except HTTPException:
         raise
@@ -134,6 +122,58 @@ def score_order(
 
         logger.exception(
             "Unexpected error while scoring order."
+        )
+
+        raise HTTPException(
+            status_code=500,
+            detail="Internal server error",
+        )
+    
+@app.post(
+    "/score/batch",
+    tags=["Fraud Detection"],
+    summary="Predict Fraud Risk for Multiple Orders",
+    response_model=BatchScoreResponse,
+    responses={
+        200: {
+            "description": "Batch prediction generated successfully."
+        },
+        401: {
+            "description": "Missing or invalid API key."
+        },
+        422: {
+            "description": "Validation error."
+        },
+        500: {
+            "description": "Unexpected server error."
+        },
+    },
+)
+def score_orders(
+    request: BatchScoreRequest,
+    _: str = Depends(verify_api_key),
+    ) -> BatchScoreResponse:
+    """
+    Predict fraud risk for multiple incoming orders.
+
+    The request is authenticated using an API key,
+    validated with Pydantic,
+    and each order is scored using the shared scoring service.
+
+    Returns:
+        list[ScoreResponse]
+    """
+
+    try:
+        return score_batch(request)
+
+    except HTTPException:
+        raise
+
+    except Exception:
+
+        logger.exception(
+            "Unexpected error while scoring batch."
         )
 
         raise HTTPException(
