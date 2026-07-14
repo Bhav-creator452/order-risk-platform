@@ -15,7 +15,7 @@ from src.schemas import (
 ) 
 from src.logger import logger
 
-from src.services.scoring import (
+from services.scoring import (
     score_single_order,
     score_batch,
 )
@@ -49,7 +49,6 @@ All requests to the `/score` endpoint require a valid `X-API-Key` header.
     },
     
 )
-
 
 @app.get(
     "/",
