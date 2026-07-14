@@ -13,16 +13,20 @@ from src.enums import (
 class OrderRequest(BaseModel):
     transaction_amount: float = Field(
         ...,
-        gt=0,
+        ge=0,
         description="Total transaction amount.",
-        example=1499.99,
-    )
+        json_schema_extra={
+        "example": 1499.99
+    },
+)
 
     quantity: int = Field(
         ...,
         ge=1,
         description="Number of items purchased.",
-        example=2,
+        json_schema_extra={
+        "example": 2
+    },
     )
 
     customer_age: int = Field(
@@ -30,14 +34,18 @@ class OrderRequest(BaseModel):
         ge=18,
         le=100,
         description="Age of the customer.",
-        example=28,
+        json_schema_extra={
+        "example": 28
+    },
     )
 
     account_age_days: int = Field(
         ...,
         ge=0,
         description="Customer account age in days.",
-        example=365,
+        json_schema_extra={
+        "example": 365
+    },
     )
 
     transaction_hour: int = Field(
@@ -45,14 +53,17 @@ class OrderRequest(BaseModel):
         ge=0,
         le=23,
         description="Hour of transaction (24-hour format).",
-        example=14,
+        json_schema_extra={
+        "example": 14
+    },
     )
 
     transaction_date: datetime = Field(
-        ...,
-        description="Transaction date.",
-        example="2025-06-20 15:20:04",
-    )
+    ...,
+        json_schema_extra={
+        "example": "2025-06-20 15:20:04"
+    },
+)
 
     payment_method: PaymentMethod = Field(
         ...,
@@ -71,14 +82,18 @@ class OrderRequest(BaseModel):
 
     shipping_address: str = Field(
         ...,
-        description="Shipping address.",
-        example="Delhi",
-    )
+        description="Shipping Address",
+        json_schema_extra={
+        "example": "Delhi"
+    },
+)
 
     billing_address: str = Field(
         ...,
         description="Billing address.",
-        example="Delhi",
+        json_schema_extra={
+        "example": "Delhi"
+    },
     )
 
 class ScoreResponse(BaseModel):
@@ -89,13 +104,17 @@ class ScoreResponse(BaseModel):
     prediction: int = Field(
         ...,
         description="Predicted fraud class. 0 = Legitimate, 1 = Fraud.",
-        example=0,
+        json_schema_extra={
+        "example": 0
+    },
     )
 
     label: str = Field(
         ...,
         description="Human-readable prediction label.",
-        example="Legitimate",
+        json_schema_extra={
+        "example": "Legitimate"
+    },
     )
 
     fraud_probability: float = Field(
@@ -103,7 +122,9 @@ class ScoreResponse(BaseModel):
         ge=0,
         le=1,
         description="Probability that the order is fraudulent.",
-        example=0.0842,
+        json_schema_extra={
+        "example": 0.0842
+    },
     )
 
 class BatchScoreRequest(BaseModel):
