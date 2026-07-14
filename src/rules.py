@@ -50,7 +50,7 @@ class CountryMismatch(RiskRule):
     def evaluate(self,order:Order) -> int:
         if order.customer.country!=order.shipping_country:
             logger.info(
-            f"CountryMismatchRule fired for {order.id} | {order.summary()}")
+            f"CountryMismatchRule fired for {order.id}")
             Risk_points=1
             return Risk_points
         return 0
