@@ -2,16 +2,13 @@ from src.config import API_KEY
 from tests.test_data import valid_order
 
 
-def test_batch_score_valid_request(client):
+def test_batch_score_valid_request(client,auth_headers):
     """
     Test that the batch scoring endpoint
     returns one prediction per input order.
     """
 
     # Arrange
-    headers = {
-        "X-API-Key": API_KEY
-    }
 
     payload = {
         "orders": [
@@ -24,7 +21,7 @@ def test_batch_score_valid_request(client):
     response = client.post(
         "/score/batch",
         json=payload,
-        headers=headers,
+        headers=auth_headers,
     )
 
     # Assert
