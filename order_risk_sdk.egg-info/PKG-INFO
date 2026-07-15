@@ -1,8 +1,0 @@
-Metadata-Version: 2.4
-Name: order-risk-sdk
-Version: 0.1.0
-Summary: Python SDK for the Order Risk API
-Author: Bhavdeep Kaur
-Requires-Python: >=3.11
-Description-Content-Type: text/markdown
-Requires-Dist: requests>=2.31.0
