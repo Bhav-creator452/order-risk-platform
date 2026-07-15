@@ -379,6 +379,28 @@ This project demonstrates practical experience with:
 
 ---
 
+## Python SDK
+
+Install in editable mode:
+
+```bash
+pip install -e .
+```
+
+Example:
+
+```python
+from order_risk_sdk import OrderRiskClient
+
+client = OrderRiskClient(
+    api_key="YOUR_API_KEY"
+)
+
+result = client.score_order(order)
+
+print(result)
+```
+
 
 # 👩‍💻 Author
 
