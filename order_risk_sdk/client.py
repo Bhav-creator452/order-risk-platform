@@ -53,17 +53,14 @@ class OrderRiskClient:
 
         return headers
     
-    def score_order(
-    self,
-    order: dict[str, Any],
-    ) -> dict[str, Any]:
-        """
-        Send an order to the API and return the prediction.
-        """
+    def _send_request(
+            self, endpoint: str, payload: dict) -> dict:
+        """Send a POST request to the Order Risk API."""
+
         try:
             response = requests.post(
-                url=f"{self.config.base_url}/score",
-                json=order,
+                url=f"{self.config.base_url}{endpoint}",
+                json=payload,
                 headers=self.headers,
                 timeout=self.config.timeout,
             )
@@ -73,21 +70,48 @@ class OrderRiskClient:
             return response.json()
 
         except requests.exceptions.HTTPError as e:
+            # response should be available when raise_for_status() fails
+            status = getattr(e.response, "status_code", None)
+            text = getattr(e.response, "text", None)
             raise APIError(
-                f"API returned {response.status_code}: {response.text}"
+                f"API returned {status}: {text}"
             ) from e
 
         except requests.exceptions.ConnectionError as e:
-            raise APIError(
-                "Could not connect to the Order Risk API."
-            ) from e
+            raise APIError("Could not connect to the Order Risk API.") from e
 
         except requests.exceptions.Timeout as e:
-            raise APIError(
-                "The request timed out."
-            ) from e
+            raise APIError("The request timed out.") from e
 
         except requests.exceptions.RequestException as e:
-            raise APIError(
-                f"Unexpected request error: {e}"
-            ) from e
+            raise APIError(f"Unexpected request error: {e}") from e
+    
+    def score_order(
+        self,
+        order: dict[str, Any],
+    ) -> dict[str, Any]:
+        """
+        Send an order to the API and return the prediction.
+        """
+
+        return self._send_request(
+            endpoint="/score",
+            payload=order,
+        )
+
+    def batch_score(
+        self,
+        orders: list[dict[str, Any]],
+    ) -> dict[str, Any]:
+        """
+        Send multiple orders to the API and return batch predictions.
+        """
+
+        payload = {
+            "orders": orders,
+        }
+
+        return self._send_request(
+            endpoint="/score/batch",
+            payload=payload,
+        )
