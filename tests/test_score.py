@@ -1,5 +1,5 @@
 from src.config import API_KEY
-from tests.test_data import valid_order
+from tests.sample_data import valid_order
 
 
 def test_score_valid_order(client, auth_headers,valid_order_payload):

@@ -4,7 +4,7 @@ from fastapi.testclient import TestClient
 from src.app import app
 from src.config import API_KEY
 
-from tests.test_data import valid_order
+from tests.sample_data import valid_order
 
 @pytest.fixture
 def client():
