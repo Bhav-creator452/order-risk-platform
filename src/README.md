@@ -18,18 +18,58 @@ The API accepts an order, validates the request, performs the same preprocessing
 
 ## ✨ Features
 
-- Machine Learning powered fraud prediction
-- Random Forest Classifier
-- Feature engineering pipeline
-- Automatic request validation using Pydantic
-- API Key Authentication
-- Environment-based configuration
-- Automatic Swagger / OpenAPI documentation
-- Structured logging
-- Modular project architecture
-- Production-style error handling
+✅ Fraud detection using Random Forest
+
+✅ REST API with FastAPI
+
+✅ Python SDK
+
+✅ Batch prediction
+
+✅ API Key authentication
+
+✅ Pydantic validation
+
+✅ Automatic OpenAPI documentation
+
+✅ Reusable preprocessing pipeline
+
+✅ Structured logging
+
+✅ Installable Python package
 
 ---
+
+## Architecture 
+
+                    Client Application
+                           │
+                           ▼
+                  Python SDK (Optional)
+                           │
+                           ▼
+                    FastAPI REST API
+                           │
+                           ▼
+                 API Key Authentication
+                           │
+                           ▼
+                  Request Validation
+                        (Pydantic)
+                           │
+                           ▼
+                  Feature Engineering
+                           │
+        ┌──────────────────┼──────────────────┐
+        │                  │                  │
+        ▼                  ▼                  ▼
+   Rename Columns     Feature Alignment   Standard Scaling
+        │
+        ▼
+              Random Forest Model
+                     │
+                     ▼
+          Fraud Prediction Response
 
 ## 🛠 Tech Stack
 
@@ -47,62 +87,28 @@ The API accepts an order, validates the request, performs the same preprocessing
 
 ---
 
-# 🧠 Machine Learning Pipeline
-
-```
-Raw Request
-      │
-      ▼
-Request Validation
-(Pydantic)
-      │
-      ▼
-Feature Engineering
-      │
-      ├── Rename Columns
-      ├── Date Features
-      ├── Address Match
-      ├── Account Age Groups
-      ├── One-Hot Encoding
-      ├── Feature Alignment
-      └── Standard Scaling
-      │
-      ▼
-Random Forest Model
-      │
-      ▼
-Prediction
-      │
-      ▼
-JSON Response
-```
-
----
-
 # 📂 Project Structure
 
 ```
+
 order-risk-platform/
 
-│
 ├── app.py
+├── pyproject.toml
 ├── README.md
-├── .env.example
-├── .gitignore
+├── requirements.txt
 │
-├── models/
-│   ├── Random_Forest_model.joblib
-│   ├── scaler.joblib
-│   └── feature_names.joblib
-│
-├── src/
-│   ├── auth.py
+├── order_risk_sdk/
+│   ├── client.py
 │   ├── config.py
-│   ├── enums.py
-│   ├── predictor.py
-│   └── preprocessing.py
+│   ├── exceptions.py
+│   └── __init__.py
 │
-└── notebooks/
+├── services/
+├── models/
+├── tests/
+├── notebooks/
+└── data/
 ```
 
 ---
@@ -302,21 +308,68 @@ This guarantees inference consistency between training and production.
 
 ---
 
+## 📦 Python SDK
+
+Install the SDK in editable mode:
+
+```bash
+pip install -e .
+```
+
+Create a client:
+
+```python
+from order_risk_sdk import OrderRiskClient
+
+client = OrderRiskClient(
+    base_url="http://127.0.0.1:8000",
+    api_key="YOUR_API_KEY",
+)
+```
+
+### Score a single order
+
+```python
+result = client.score_order(order)
+
+print(result)
+```
+
+### Score multiple orders
+
+```python
+results = client.batch_score(
+    [
+        order1,
+        order2,
+    ]
+)
+
+print(results)
+```
+
+The SDK automatically:
+
+- Handles authentication
+- Sends HTTP requests
+- Parses JSON responses
+- Raises `APIError` for request failures
+
 # 🧪 Testing
 
 The API has been manually tested for the following scenarios.
 
-| Test | Status |
-|-------|--------|
-| Health endpoint | ✅ |
-| Root endpoint | ✅ |
-| Valid prediction | ✅ |
-| Missing API Key | ✅ |
-| Invalid API Key | ✅ |
-| Invalid request body | ✅ |
-| Missing required field | ✅ |
-| Invalid enum values | ✅ |
-| Internal server error handling | ✅ |
+| Component               | Status   |
+| ----------------------- | :----:   |
+| Health endpoint         |    ✅   |
+| `/score` endpoint       |    ✅   |
+| `/score/batch` endpoint |    ✅   |
+| API authentication      |    ✅   |
+| Request validation      |    ✅   |
+| SDK `score_order()`     |    ✅   |
+| SDK `batch_score()`     |    ✅   |
+| Editable installation   |    ✅   |
+| External import         |    ✅   |
 
 ---
 
@@ -347,19 +400,27 @@ JSON Response
 
 # 🔮 Future Improvements
 
-Possible enhancements include:
+- Possible enhancements include:
 
-- JWT Authentication
-- Batch prediction endpoint
-- Docker support
-- Unit and integration tests
-- CI/CD pipeline
-- Cloud deployment
-- Model versioning
-- Database integration
-- Monitoring and metrics
+- Docker containerization
+
+- GitHub Actions CI/CD
+
+- Cloud deployment (AWS/Azure/GCP)
+
 - Rate limiting
 
+- JWT authentication
+
+- Model versioning
+
+- Database integration
+
+- Monitoring and metrics
+
+- Request tracing
+
+- Caching
 ---
 
 # 📚 Learning Outcomes
@@ -378,28 +439,6 @@ This project demonstrates practical experience with:
 - API documentation
 
 ---
-
-## Python SDK
-
-Install in editable mode:
-
-```bash
-pip install -e .
-```
-
-Example:
-
-```python
-from order_risk_sdk import OrderRiskClient
-
-client = OrderRiskClient(
-    api_key="YOUR_API_KEY"
-)
-
-result = client.score_order(order)
-
-print(result)
-```
 
 
 # 👩‍💻 Author
