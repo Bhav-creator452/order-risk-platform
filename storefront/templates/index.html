@@ -100,33 +100,39 @@
       </form>
       {% if result %}
 
-<div class="result-card">
+<div class="result-card {% if result.prediction == 1 %}high-risk{% else %}low-risk{% endif %}">
 
-    <h2>Prediction Result</h2>
+    <h2>Prediction Summary</h2>
 
-    <p>
+    <div class="prediction-status">
 
-        <strong>Prediction:</strong>
+        {% if result.prediction == 1 %}
+            <h3 class="risk-high">🔴 Fraud Detected</h3>
+        {% else %}
+            <h3 class="risk-low">🟢 Legitimate Order</h3>
+        {% endif %}
 
-        {{ result.prediction }}
+    </div>
 
-    </p>
+    <div class="prediction-details">
 
-    <p>
+        <p>
+            <strong>Fraud Probability</strong>
+        </p>
 
-        <strong>Risk Label:</strong>
+        <h2>{{ result.fraud_percentage }}%</h2>
 
-        {{ result.label }}
+       <progress
+            class="progress-bar {% if result.prediction == 1 %}progress-high{% else %}progress-low{% endif %}"
+            value="{{ result.fraud_percentage }}"
+            max="100">
+        </progress>
 
-    </p>
+        <p class="timestamp">
+            Prediction generated on {{ prediction_time }}
+        </p>
 
-    <p>
-
-        <strong>Fraud Probability:</strong>
-
-        {{ "%.2f"|format(result.fraud_probability * 100) }}%
-
-    </p>
+    </div>
 
 </div>
 
