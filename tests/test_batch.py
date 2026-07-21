@@ -1,4 +1,4 @@
-from src.config import API_KEY
+from core.config import API_KEY
 from tests.sample_data import valid_order
 
 
