@@ -98,6 +98,39 @@
 
         <button type="submit">Predict Risk</button>
       </form>
+      {% if result %}
+
+<div class="result-card">
+
+    <h2>Prediction Result</h2>
+
+    <p>
+
+        <strong>Prediction:</strong>
+
+        {{ result.prediction }}
+
+    </p>
+
+    <p>
+
+        <strong>Risk Label:</strong>
+
+        {{ result.label }}
+
+    </p>
+
+    <p>
+
+        <strong>Fraud Probability:</strong>
+
+        {{ "%.2f"|format(result.fraud_probability * 100) }}%
+
+    </p>
+
+</div>
+
+{% endif %}
     </div>
   </body>
 </html>

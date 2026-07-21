@@ -67,3 +67,20 @@ button {
 button:hover {
     background: #1d4ed8;
 }
+
+.result-card {
+    margin-top: 30px;
+    padding: 20px;
+    border-radius: 10px;
+    background: #f8fafc;
+    border-left: 6px solid #2563eb;
+}
+
+.result-card h2 {
+    margin-top: 0;
+}
+
+.result-card p {
+    margin: 12px 0;
+    font-size: 17px;
+}
