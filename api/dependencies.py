@@ -1,5 +1,5 @@
-from src.predictor import FraudPredictor
-from src.preprocessing import FeaturePreprocessor
+from ml.predictor import FraudPredictor
+from ml.preprocessing import FeaturePreprocessor
 
 # Load predictor once
 predictor = FraudPredictor()

@@ -1,7 +1,7 @@
 from typing import List
 
-from src.dependencies import predictor, preprocessor
-from src.schemas import (
+from api.dependencies import predictor, preprocessor
+from api.schemas import (
     OrderRequest,
     ScoreResponse,
     BatchScoreRequest,

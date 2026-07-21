@@ -4,7 +4,7 @@ from pydantic import BaseModel
 from pydantic import Field
 from datetime import datetime
 
-from src.enums import (
+from core.enums import (
     PaymentMethod,
     ProductCategory,
     DeviceUsed,

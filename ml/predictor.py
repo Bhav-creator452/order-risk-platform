@@ -12,8 +12,8 @@ import joblib
 
 import pandas as pd
 
-from src.logger import logger
-from src.config import (
+from core.logger import logger
+from core.config import (
     MODEL_PATH,
     FEATURE_NAMES_PATH,
     SCALER_PATH,

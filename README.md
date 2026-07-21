@@ -90,26 +90,64 @@ The API accepts an order, validates the request, performs the same preprocessing
 # 📂 Project Structure
 
 ```
+The repository is organized into modular components, separating the API, machine learning pipeline, Python SDK, and rule-based engine for maintainability and scalability.
+
 
 order-risk-platform/
-
-├── app.py
-├── pyproject.toml
-├── README.md
-├── requirements.txt
+│
+├── app/
+│   ├── __init__.py
+│   ├── app.py                  # FastAPI application entry point
+│   │
+│   ├── api/
+│   │   ├── __init__.py
+│   │   ├── auth.py             # API key authentication
+│   │   ├── dependencies.py     # FastAPI dependencies
+│   │   └── schemas.py          # Request and response models
+│   │
+│   ├── core/
+│   │   ├── __init__.py
+│   │   ├── config.py           # Configuration and environment settings
+│   │   ├── enums.py            # Shared enumerations
+│   │   └── logger.py           # Logging configuration
+│   │
+│   └── ml/
+│       ├── __init__.py
+│       ├── predictor.py        # Model inference
+│       ├── preprocessing.py    # Feature engineering pipeline
+│       └── model_loader.py     # Model loading utilities (or model_check.py if unchanged)
 │
 ├── order_risk_sdk/
-│   ├── client.py
-│   ├── config.py
-│   ├── exceptions.py
-│   └── __init__.py
+│   ├── __init__.py
+│   ├── client.py               # SDK client
+│   ├── config.py               # SDK configuration
+│   └── exceptions.py           # Custom SDK exceptions
 │
-├── services/
-├── models/
-├── tests/
-├── notebooks/
-└── data/
-```
+├── rule_engine/
+│   ├── __init__.py
+│   ├── cli.py                  # Rule engine CLI
+│   ├── models.py               # Customer & Order dataclasses
+│   ├── rules.py                # Business rules
+│   ├── scorer.py               # Risk scoring engine
+│   │
+│   ├── examples/
+│   │   ├── model_check.py
+│   │   └── scorer_check.py
+│   │
+│   └── json_samples/
+│       ├── high_risk_order.json
+│       ├── medium_risk_order.json
+│       └── low_risk_order.json
+│
+├── services/                   # Business/service layer
+├── models/                     # Trained ML model artifacts (.joblib)
+├── tests/                      # Unit and SDK tests
+├── notebooks/                  # EDA and experimentation
+├── data/                       # Dataset(s)
+│
+├── README.md
+├── pyproject.toml
+└── .gitignore
 
 ---
 

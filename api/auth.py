@@ -8,7 +8,7 @@ from fastapi import status
 
 from fastapi.security import APIKeyHeader
 
-from src.config import API_KEY
+from core.config import API_KEY
 
 
 api_key_header = APIKeyHeader(

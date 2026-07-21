@@ -5,15 +5,15 @@ from fastapi import FastAPI
 from fastapi import HTTPException
 from fastapi import Request
 
-from src.auth import verify_api_key
+from api.auth import verify_api_key
 
-from src.schemas import (
+from api.schemas import (
     OrderRequest,
     ScoreResponse,
     BatchScoreRequest,
     BatchScoreResponse
 ) 
-from src.logger import logger
+from core.logger import logger
 
 from services.scoring import (
     score_single_order,
