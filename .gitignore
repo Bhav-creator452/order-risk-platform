@@ -6,10 +6,10 @@ __pycache__/
 *.pyc
 
 #data 
-'data/'
+data/
 
 #cleaned CSV
-'notebooks/cleaned_data.csv'
+notebooks/cleaned_data.csv
 
 .env
 
