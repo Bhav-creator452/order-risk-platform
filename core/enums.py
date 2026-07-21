@@ -17,3 +17,4 @@ class ProductCategory(str, Enum):
 class DeviceUsed(str, Enum):
     MOBILE = "mobile"
     TABLET = "tablet"
+    DESKTOP = "desktop"

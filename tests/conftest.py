@@ -1,8 +1,8 @@
 import pytest
 from fastapi.testclient import TestClient
 
-from src.app import app
-from src.config import API_KEY
+from app.app import app
+from core.config import API_KEY
 
 from tests.sample_data import valid_order
 
