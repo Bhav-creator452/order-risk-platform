@@ -1,69 +1,103 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <head>
+    <meta charset="UTF-8" />
+
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
     <title>Order Risk Scoring Platform</title>
-</head>
-<body>
 
-<h1>Order Risk Scoring</h1>
+    <link
+      rel="stylesheet"
+      href="{{ url_for('static', filename='css/style.css') }}"
+    />
+  </head>
 
-<form method="POST">
+  <body>
+    <div class="container">
+      <h1>Order Risk Detection Platform</h1>
 
-    <p>
-        <label>Transaction Amount</label><br>
-        <input
+      <p class="subtitle">fraud detection demo</p>
+
+      <form method="POST">
+        <fieldset>
+          <legend>Order Details</legend>
+
+          <label>Transaction Amount</label>
+
+          <input
             type="number"
             name="transaction_amount"
             step="0.01"
-            required>
-    </p>
+            placeholder="e.g. 1499.99"
+            required
+          />
 
-    <p>
-        <label>Quantity</label><br>
-        <input
-            type="number"
-            name="quantity"
-            required>
-    </p>
+          <label>Quantity</label>
 
-    <p>
-        <label>Customer Age</label><br>
-        <input
+          <input type="number" name="quantity" min="1" required />
+
+          <label>Payment Method</label>
+
+          <select name="payment_method">
+            <option value="credit card">Credit Card</option>
+
+            <option value="debit card">Debit Card</option>
+
+            <option value="bank transfer">Bank Transfer</option>
+          </select>
+
+          <label>Product Category</label>
+
+          <select name="product_category">
+            <option value="electronics">Electronics</option>
+
+            <option value="health & beauty">Health & Beauty</option>
+
+            <option value="home & garden">Home & Garden</option>
+
+            <option value="toys & games">Toys & Games</option>
+          </select>
+        </fieldset>
+
+        <fieldset>
+          <legend>Customer Details</legend>
+
+          <label>Customer Age</label>
+
+          <input
             type="number"
             name="customer_age"
-            required>
-    </p>
+            min="18"
+            max="100"
+            required
+          />
 
-    <p>
-        <label>Account Age (Days)</label><br>
-        <input
-            type="number"
-            name="account_age_days"
-            required>
-    </p>
+          <label>Account Age (Days)</label>
 
-    <p>
-        <label>Payment Method</label><br>
+          <input type="number" name="account_age_days" min="0" required />
 
-        <select name="payment_method">
+          <label>Shipping Address</label>
 
-            <option value="Credit Card">Credit Card</option>
+          <input
+            type="text"
+            name="shipping_address"
+            placeholder="e.g. Delhi"
+            required
+          />
 
-            <option value="Debit Card">Debit Card</option>
+          <label>Billing Address</label>
 
-            <option value="Bank Transfer">Bank Transfer</option>
+          <input
+            type="text"
+            name="billing_address"
+            placeholder="e.g. Delhi"
+            required
+          />
+        </fieldset>
 
-        </select>
-
-    </p>
-
-    <button type="submit">
-        Predict Risk
-    </button>
-
-</form>
-
-</body>
+        <button type="submit">Predict Risk</button>
+      </form>
+    </div>
+  </body>
 </html>
