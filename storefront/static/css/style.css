@@ -282,3 +282,17 @@ button:hover{
     gap:30px;
     align-items:start;
 }
+
+.error-card {
+    background: #fdecea;
+    border: 1px solid #f5c2c7;
+    color: #842029;
+    padding: 1rem;
+    border-radius: 10px;
+    margin-top: 1.5rem;
+}
+
+.error-card strong {
+    display: block;
+    margin-bottom: 0.5rem;
+}
