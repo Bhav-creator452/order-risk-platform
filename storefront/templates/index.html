@@ -7,6 +7,14 @@
 
     <title>Order Risk Scoring Platform</title>
 
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+
+  <link 
+href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&display=swap" 
+rel="stylesheet">
+
     <link
       rel="stylesheet"
       href="{{ url_for('static', filename='css/style.css') }}"
@@ -15,14 +23,46 @@
 
   <body>
     <div class="container">
-      <h1>Order Risk Detection Platform</h1>
+      <div class="hero">
 
-      <p class="subtitle">fraud detection demo</p>
+    <div class="hero-icon">
+
+        🛡️
+
+    </div>
+
+    <h1>Fraud Risk Analyzer</h1>
+
+    <h2>
+        Fraud Detection Platform
+    </h2>
+
+    <p>
+        Analyze e-commerce orders using an AI-powered
+        fraud detection engine.
+    </p>
+
+</div>
+
+<div class="tech-stack">
+    <span>⚡ FastAPI</span>
+    <span>🧠 Random Forest</span>
+    <span>📦 Python SDK</span>
+
+</div>
 
       <form method="POST">
-        <fieldset>
-          <legend>Order Details</legend>
+      <div class="form-grid">
 
+        <div class="form-card">
+
+    <div class="card-header">
+
+        <span class="card-icon">📦</span>
+
+        <h3>Order Information</h3>
+
+    </div>
           <label>Transaction Amount</label>
 
           <input
@@ -58,10 +98,17 @@
 
             <option value="toys & games">Toys & Games</option>
           </select>
-        </fieldset>
+        </div>
 
-        <fieldset>
-          <legend>Customer Details</legend>
+        <div class="form-card">
+
+    <div class="card-header">
+
+        <span class="card-icon">👤</span>
+
+        <h3>Customer Information</h3>
+
+    </div>
 
           <label>Customer Age</label>
 
@@ -94,7 +141,8 @@
             placeholder="e.g. Delhi"
             required
           />
-        </fieldset>
+        </div>
+      </div>
 
         <button type="submit">Predict Risk</button>
       </form>
