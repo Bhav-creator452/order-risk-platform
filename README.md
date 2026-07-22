@@ -42,48 +42,52 @@ The API accepts an order, validates the request, performs the same preprocessing
 
 ## Architecture 
 
-                    Client Application
-                           │
-                           ▼
-                  Python SDK (Optional)
-                           │
-                           ▼
-                    FastAPI REST API
-                           │
-                           ▼
-                 API Key Authentication
-                           │
-                           ▼
-                  Request Validation
-                        (Pydantic)
-                           │
-                           ▼
-                  Feature Engineering
-                           │
-        ┌──────────────────┼──────────────────┐
-        │                  │                  │
-        ▼                  ▼                  ▼
-   Rename Columns     Feature Alignment   Standard Scaling
-        │
-        ▼
-              Random Forest Model
-                     │
-                     ▼
-          Fraud Prediction Response
+## 🏗️ Architecture
 
+```mermaid
+flowchart TD
+    A([Client Application]) --> B[Python SDK (Optional)]
+    B --> C[FastAPI REST API]
+
+    C --> D[API Key Authentication]
+    D --> E[Request Validation<br/>(Pydantic)]
+    E --> F[Feature Engineering]
+
+    F --> F1[Rename Columns]
+    F --> F2[Date Features]
+    F --> F3[Address Matching]
+    F --> F4[One-Hot Encoding]
+    F --> F5[Feature Alignment]
+    F --> F6[Standard Scaling]
+
+    F1 --> G[Random Forest Classifier]
+    F2 --> G
+    F3 --> G
+    F4 --> G
+    F5 --> G
+    F6 --> G
+
+    G --> H[Prediction Response]
+
+    H --> H1[Prediction]
+    H --> H2[Label]
+    H --> H3[Risk Level]
+    H --> H4[Fraud Probability]
+    H --> H5[Confidence]
+```
 ## 🛠 Tech Stack
 
-| Category | Technology |
-|-----------|------------|
-| Language | Python 3.10+ |
-| API Framework | FastAPI |
-| Validation | Pydantic |
-| Machine Learning | Scikit-learn |
-| Data Processing | Pandas |
-| Model Serialization | Joblib |
-| Environment Variables | python-dotenv |
-| API Documentation | Swagger UI / OpenAPI |
-| Server | Uvicorn |
+| Category              | Technology           |
+|-----------------------|----------------------|
+| Language              | Python 3.10+         |
+| API Framework         | FastAPI              |
+| Validation            | Pydantic             |
+| Machine Learning      | Scikit-learn         |
+| Data Processing       | Pandas               |
+| Model Serialization   | Joblib               |
+| Environment Variables | python-dotenv        |
+| API Documentation     | Swagger UI / OpenAPI |
+| Server                | Uvicorn              |
 
 ---
 
@@ -203,7 +207,7 @@ SCALER_PATH=models/scaler.joblib
 # ▶ Running the API
 
 ```bash
-uvicorn app:app --reload
+uvicorn app.app:app --reload
 ```
 
 API
@@ -257,7 +261,7 @@ Response
   "message": "Order Risk Platform API"
 }
 ```
-
+![Swagger UI](image.png)
 ---
 
 ## GET /health
@@ -302,10 +306,59 @@ Predicts the fraud risk of an incoming order.
 {
   "prediction": 0,
   "label": "Legitimate",
-  "fraud_probability": 0.0842
+  "risk_level": "LOW",
+  "fraud_probability": 0.0842,
+  "confidence": "8.42%"
+}
+```
+### Example Single Prediction
+
+![Single Order Prediction](image-2.png)
+
+## POST /score/batch
+
+Predicts fraud risk for multiple orders in a single request.
+
+### Sample Request
+
+```json
+{
+  "orders": [
+    {
+      "transaction_amount": 250,
+      "quantity": 1,
+      "customer_age": 42,
+      "account_age_days": 900,
+      "transaction_hour": 14,
+      "transaction_date": "2025-06-20T15:20:04",
+      "payment_method": "credit card",
+      "product_category": "electronics",
+      "device_used": "desktop",
+      "shipping_address": "Delhi",
+      "billing_address": "Delhi"
+    }
+  ]
 }
 ```
 
+### Sample Response
+
+```json
+{
+  "results": [
+    {
+      "prediction": 0,
+      "label": "Legitimate",
+      "risk_level": "LOW",
+      "fraud_probability": 0.1397,
+      "confidence": "13.97%"
+    }
+  ]
+}
+```
+### Example Batch Prediction
+
+![Batch Order Prediction](image-1.png)
 ---
 
 # ✅ Request Validation
@@ -410,6 +463,18 @@ The API has been manually tested for the following scenarios.
 | External import         |    ✅   |
 
 ---
+
+# 🎬 Demo
+
+The API has been tested using three representative orders to demonstrate different fraud risk levels.
+
+| Order       | Prediction | Risk Level | Fraud Probability |
+|-------------|------------|------------|------------------:|
+| Low Risk    | Legitimate | LOW        | 13.97%            |
+| Medium Risk | Fraud      | MEDIUM     | 55.99%            |
+| High Risk   | Fraud      | HIGH       | 78.11%            |
+
+These examples demonstrate how the API differentiates between varying levels of fraud risk.
 
 # 📈 Example Workflow
 
