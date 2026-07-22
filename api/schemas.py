@@ -117,6 +117,14 @@ class ScoreResponse(BaseModel):
     },
     )
 
+    risk_level: str = Field(
+    ...,
+    description="Human-readable risk level based on fraud probability.",
+    json_schema_extra={
+        "example": "LOW"
+    },
+    )
+
     fraud_probability: float = Field(
         ...,
         ge=0,
@@ -124,8 +132,16 @@ class ScoreResponse(BaseModel):
         description="Probability that the order is fraudulent.",
         json_schema_extra={
         "example": 0.0842
-    },
+    },     
     )
+
+    fraud_probability_percentage: str = Field(
+    ...,
+    description="Fraud probability expressed as a percentage.",
+    json_schema_extra={
+        "example": "78.11%"
+    },
+)
 
 class BatchScoreRequest(BaseModel):
     """

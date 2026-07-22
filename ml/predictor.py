@@ -105,9 +105,17 @@ class FraudPredictor:
             if prediction == 1
             else "Legitimate"
         )
+        if probability < 0.30:
+            risk_level = "LOW"
+        elif probability < 0.70:
+            risk_level = "MEDIUM"
+        else:
+            risk_level = "HIGH"
 
         return {
             "prediction": prediction,
             "label": label,
+            "risk_level": risk_level,
             "fraud_probability": round(probability, 4),
+            "fraud_probability_percentage": f"{probability * 100:.2f}%",
         }
