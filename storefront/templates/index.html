@@ -71,33 +71,54 @@ rel="stylesheet">
             name="transaction_amount"
             step="0.01"
             placeholder="e.g. 1499.99"
+            value="{{ form_data.get('transaction_amount', '') }}"
             required
           />
 
           <label for="quantity">Quantity</label>
 
-          <input id="quantity" type="number" name="quantity" min="1" required />
+          <input id="quantity" type="number" name="quantity" min="1" value="{{ form_data.get('quantity', '') }}" required />
 
           <label for="payment_method">Payment Method</label>
 
           <select id="payment_method" name="payment_method">
-            <option value="credit card">Credit Card</option>
+            <option value="credit card"
+            {% if form_data.get('payment_method') == 'credit card' %}selected{% endif %}>
+              Credit Card</option>
 
-            <option value="debit card">Debit Card</option>
+            <option value="debit card"
+            {% if form_data.get('payment_method') == 'debit card' %}selected{% endif %}>
+              
+              Debit Card</option>
 
-            <option value="bank transfer">Bank Transfer</option>
+            <option value="bank transfer"
+             {% if form_data.get('payment_method') == 'bank transfer' %}selected{% endif %}>
+             
+              Bank Transfer</option>
           </select>
 
           <label for="product_category">Product Category</label>
 
           <select id="product_category" name="product_category">
-            <option value="electronics">Electronics</option>
+            <option value="electronics"
+            {% if form_data.get('product_category') == 'electronics' %}selected{% endif %}>
+               
+              Electronics</option>
 
-            <option value="health & beauty">Health & Beauty</option>
+            <option value="health & beauty"
+            {% if form_data.get('product_category') == 'health & beauty' %}selected{% endif %}>
+              
+              Health & Beauty</option>
 
-            <option value="home & garden">Home & Garden</option>
+            <option value="home & garden"
+            {% if form_data.get('product_category') == 'home & garden' %}selected{% endif %}>
+              
+              Home & Garden</option>
 
-            <option value="toys & games">Toys & Games</option>
+            <option value="toys & games"
+            {% if form_data.get('product_category') == 'toys & games' %}selected{% endif %}>
+              
+              Toys & Games</option>
           </select>
         </div>
 
@@ -119,12 +140,13 @@ rel="stylesheet">
             name="customer_age"
             min="18"
             max="100"
+            value="{{ form_data.get('customer_age', '') }}"
             required
           />
 
           <label for="account_age_days">Account Age (Days)</label>
 
-          <input id="account_age_days" type="number" name="account_age_days" min="0" required />
+          <input id="account_age_days" type="number" name="account_age_days" min="0" value="{{ form_data.get('account_age_days', '') }}" required />
 
           <label for="shipping_address">Shipping Address</label>
 
@@ -133,6 +155,7 @@ rel="stylesheet">
             type="text"
             name="shipping_address"
             placeholder="e.g. Delhi"
+            value="{{ form_data.get('shipping_address', '') }}"
             required
           />
 
@@ -143,6 +166,7 @@ rel="stylesheet">
             type="text"
             name="billing_address"
             placeholder="e.g. Delhi"
+            value="{{ form_data.get('billing_address', '') }}"
             required
           />
         </div>

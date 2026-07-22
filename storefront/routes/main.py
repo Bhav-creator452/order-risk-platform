@@ -4,8 +4,10 @@ from services.risk_service import score_order
 
 from datetime import datetime
 
-main_bp = Blueprint("main", __name__)
+import logging
 
+main_bp = Blueprint("main", __name__)
+logger = logging.getLogger(__name__)
 
 @main_bp.route("/", methods=["GET", "POST"])
 def home():
@@ -41,11 +43,12 @@ def home():
 
         except Exception as e:
             error = str(e)
-            print(f"Error: {error}")
+            logger.exception("Prediction request failed.")
 
     return render_template(
         "index.html",
         result=result,
         error=error,
         prediction_time=prediction_time,
+        form_data=request.form,
     )
