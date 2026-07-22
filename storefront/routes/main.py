@@ -22,6 +22,19 @@ def home():
                 result["fraud_probability"] * 100,
                 2
             )
+
+            if result["fraud_percentage"] >= 80:
+                result["confidence"] = "Very High"
+
+            elif result["fraud_percentage"] >= 60:
+                result["confidence"] = "High"
+
+            elif result["fraud_percentage"] >= 40:
+                result["confidence"] = "Medium"
+
+            else:
+                result["confidence"] = "Low"
+
             prediction_time = datetime.now().strftime(
             "%d %b %Y • %I:%M %p"
 )

@@ -122,6 +122,9 @@
 
         <h2>{{ result.fraud_percentage }}%</h2>
 
+        <p class="confidence-badge {% if result.prediction == 1 %}confidence-high{% else %}confidence-low{% endif %}">
+          Confidence: {{ result.confidence }}
+        </p>
        <progress
             class="progress-bar {% if result.prediction == 1 %}progress-high{% else %}progress-low{% endif %}"
             value="{{ result.fraud_percentage }}"

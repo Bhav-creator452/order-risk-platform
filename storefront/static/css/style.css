@@ -121,3 +121,21 @@ button:hover {
 .progress-low::-moz-progress-bar {
   background: #16a34a;
 }
+
+.confidence-badge{
+    display:inline-block;
+    margin-bottom:20px;
+    padding:8px 14px;
+    border-radius:20px;
+    font-weight:600;
+}
+
+.confidence-high{
+    background:#fee2e2;
+    color:#b91c1c;
+}
+
+.confidence-low{
+    background:#dcfce7;
+    color:#15803d;
+}
