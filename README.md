@@ -1,10 +1,37 @@
 # 🛡️ Order Risk Platform API
 
+![Python](https://img.shields.io/badge/Python-3.10+-blue)
+![FastAPI](https://img.shields.io/badge/FastAPI-0.115-green)
+![Scikit-Learn](https://img.shields.io/badge/scikit--learn-ML-orange)
+![License](https://img.shields.io/badge/license-MIT-blue)
+![Tests](https://img.shields.io/badge/tests-passing-brightgreen)
+
 A production-style Machine Learning REST API that predicts the fraud risk of e-commerce transactions using a trained **Random Forest Classifier**.
 
 The project demonstrates the complete lifecycle of an ML application—from data preprocessing and feature engineering to model training, API development, authentication, validation, and documentation using **FastAPI**.
 
 ---
+
+## Table of Contents
+
+- Project Overview
+- Features
+- Architecture
+- Tech Stack
+- Project Structure
+- Installation
+- Environment Variables
+- Running the API
+- Authentication
+- API Endpoints
+- Feature Engineering
+- Python SDK
+- Testing
+- Demo
+- Example Workflow
+- Future Improvements
+- Learning Outcomes
+- Author
 
 ## 📌 Project Overview
 
@@ -93,67 +120,82 @@ flowchart TD
 
 # 📂 Project Structure
 
-```
-The repository is organized into modular components, separating the API, machine learning pipeline, Python SDK, and rule-based engine for maintainability and scalability.
+The project is organized into modular components, separating the API, machine learning pipeline, SDK, rule engine, frontend, and tests for maintainability and scalability.
 
-
+```text
 order-risk-platform/
 │
-├── app/
+├── api/                          # API schemas, authentication, and dependencies
 │   ├── __init__.py
-│   ├── app.py                  # FastAPI application entry point
-│   │
-│   ├── api/
-│   │   ├── __init__.py
-│   │   ├── auth.py             # API key authentication
-│   │   ├── dependencies.py     # FastAPI dependencies
-│   │   └── schemas.py          # Request and response models
-│   │
-│   ├── core/
-│   │   ├── __init__.py
-│   │   ├── config.py           # Configuration and environment settings
-│   │   ├── enums.py            # Shared enumerations
-│   │   └── logger.py           # Logging configuration
-│   │
-│   └── ml/
-│       ├── __init__.py
-│       ├── predictor.py        # Model inference
-│       ├── preprocessing.py    # Feature engineering pipeline
-│       └── model_loader.py     # Model loading utilities (or model_check.py if unchanged)
+│   ├── auth.py
+│   ├── dependencies.py
+│   └── schemas.py
 │
-├── order_risk_sdk/
+├── app/                          # FastAPI application entry point
 │   ├── __init__.py
-│   ├── client.py               # SDK client
-│   ├── config.py               # SDK configuration
-│   └── exceptions.py           # Custom SDK exceptions
+│   └── app.py
 │
-├── rule_engine/
+├── core/                         # Shared configuration, enums, and logging
 │   ├── __init__.py
-│   ├── cli.py                  # Rule engine CLI
-│   ├── models.py               # Customer & Order dataclasses
-│   ├── rules.py                # Business rules
-│   ├── scorer.py               # Risk scoring engine
-│   │
+│   ├── config.py
+│   ├── enums.py
+│   └── logger.py
+│
+├── data/                         # Dataset(s)
+│
+├── ml/                           # Machine learning inference pipeline
+│   ├── predictor.py
+│   └── preprocessing.py
+│
+├── models/                       # Trained model and preprocessing artifacts
+│   ├── *.joblib
+│   └── ...
+│
+├── notebooks/                    # EDA, experimentation, and model development
+│   ├── fraud_detection.ipynb
+│   └── test_saved_model.py
+│
+├── order_risk_sdk/               # Reusable Python SDK
+│   ├── __init__.py
+│   ├── client.py
+│   ├── config.py
+│   └── exceptions.py
+│
+├── risk_rule_engine/             # Rule-based risk scoring engine
 │   ├── examples/
-│   │   ├── model_check.py
-│   │   └── scorer_check.py
-│   │
-│   └── json_samples/
-│       ├── high_risk_order.json
-│       ├── medium_risk_order.json
-│       └── low_risk_order.json
+│   ├── json_samples/
+│   ├── cli.py
+│   ├── models.py
+│   ├── rules.py
+│   └── scorer.py
 │
-├── services/                   # Business/service layer
-├── models/                     # Trained ML model artifacts (.joblib)
-├── tests/                      # Unit and SDK tests
-├── notebooks/                  # EDA and experimentation
-├── data/                       # Dataset(s)
+├── services/                     # Business logic layer
+│   ├── __init__.py
+│   └── scoring.py
 │
-├── README.md
+├── storefront/                   # Web interface
+│   ├── routes/
+│   ├── services/
+│   ├── static/
+│   ├── templates/
+│   ├── app.py
+│   └── config.py
+│
+├── tests/                        # Unit and integration tests
+│   ├── conftest.py
+│   ├── sample_data.py
+│   ├── test_batch.py
+│   ├── test_batch_sdk.py
+│   ├── test_score.py
+│   ├── test_sdk.py
+│   └── test_sdk_import.py
+│
+├── .env                          # Environment variables (local)
+├── .gitignore
 ├── pyproject.toml
-└── .gitignore
-
----
+├── pytest.ini
+└── README.md
+```
 
 # 🚀 Installation
 
@@ -399,6 +441,31 @@ This guarantees inference consistency between training and production.
 
 ---
 
+## 🤖 Machine Learning Model
+
+The fraud detection model is based on a **Random Forest Classifier** trained on historical e-commerce transaction data.
+
+### Training Pipeline
+
+- Data Cleaning
+- Exploratory Data Analysis (EDA)
+- Feature Engineering
+- Train/Test Split
+- Baseline Logistic Regression
+- Random Forest Training
+- Hyperparameter Tuning (GridSearchCV)
+- Model Serialization using Joblib
+
+### Evaluation Metrics
+
+- Accuracy
+- Precision
+- Recall
+- F1 Score
+- ROC-AUC
+
+The trained model and preprocessing artifacts are stored in the `models/` directory and loaded automatically during inference.
+
 ## 📦 Python SDK
 
 Install the SDK in editable mode:
@@ -466,7 +533,7 @@ The API has been manually tested for the following scenarios.
 
 # 🎬 Demo
 
-The API has been tested using three representative orders to demonstrate different fraud risk levels.
+The platform was tested using representative low-, medium-, and high-risk orders to validate the complete prediction pipeline. Each request passes through authentication, validation, preprocessing, and the trained model before returning a structured risk assessment.
 
 | Order       | Prediction | Risk Level | Fraud Probability |
 |-------------|------------|------------|------------------:|
@@ -503,8 +570,6 @@ JSON Response
 
 # 🔮 Future Improvements
 
-- Possible enhancements include:
-
 - Docker containerization
 
 - GitHub Actions CI/CD
@@ -526,22 +591,21 @@ JSON Response
 - Caching
 ---
 
-# 📚 Learning Outcomes
+## 📚 Learning Outcomes
 
-This project demonstrates practical experience with:
+Through this project I learned how to build an end-to-end machine learning application that is suitable for production-style deployment.
 
-- Machine Learning model deployment
-- REST API development
-- FastAPI
-- Feature engineering
-- Model serialization
-- Request validation
-- Authentication
-- Error handling
-- Environment configuration
-- API documentation
+Key takeaways include:
 
----
+- Designing modular Python applications.
+- Building REST APIs using FastAPI.
+- Packaging reusable Python SDKs.
+- Implementing consistent preprocessing pipelines.
+- Evaluating classification models using Precision, Recall, F1-score, and ROC-AUC.
+- Deploying trained models using Joblib.
+- Securing APIs with API key authentication.
+- Writing maintainable, testable code using Pytest.
+- Integrating machine learning into a complete software application.
 
 
 # 👩‍💻 Author
@@ -553,3 +617,7 @@ BCA Student | Aspiring Data Scientist / Machine Learning Engineer
 GitHub: https://github.com/Bhav-creator452
 
 LinkedIn: https://linkedin.com/in/bhavdeep-kaur2006
+
+## 🙏 Acknowledgements
+
+This project was developed as part of a structured software engineering and machine learning learning journey. It combines concepts from data science, backend development, API design, testing, and software architecture into a single end-to-end application.
