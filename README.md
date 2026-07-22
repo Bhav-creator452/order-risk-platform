@@ -72,7 +72,7 @@ flowchart TD
     H --> H2["Label"]
     H --> H3["Risk Level"]
     H --> H4["Fraud Probability"]
-    H --> H5["Confidence"]
+    H --> H5["Fraud Probability Percentage"]
 
 ```
 ## 🛠 Tech Stack
