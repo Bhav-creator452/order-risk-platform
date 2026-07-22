@@ -41,10 +41,13 @@ def home():
             "%d %b %Y • %I:%M %p"
 )
 
-        except Exception as e:
-            error = str(e)
+        except Exception:
             logger.exception("Prediction request failed.")
-
+            error = (
+                "Unable to connect to the prediction service. "
+                "Please make sure the Order Risk API is running."
+                    )
+            
     return render_template(
         "index.html",
         result=result,

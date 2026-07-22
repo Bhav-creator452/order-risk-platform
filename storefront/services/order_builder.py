@@ -20,7 +20,7 @@ def build_order(form_data):
         "billing_address": form_data["billing_address"],
         "transaction_date": now.isoformat(),
         "transaction_hour": now.hour,
-        "device_used": "desktop",
+        "device_used": form_data.get("device_used", "desktop"),
     }
 
     return order

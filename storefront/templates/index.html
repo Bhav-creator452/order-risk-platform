@@ -120,7 +120,26 @@ rel="stylesheet">
               
               Toys & Games</option>
           </select>
-        </div>
+
+        <label for="device_used">Device Used</label>
+
+<select id="device_used" name="device_used">
+    <option value="desktop"
+        {% if form_data.get('device_used', 'desktop') == 'desktop' %}selected{% endif %}>
+        Desktop
+    </option>
+
+    <option value="mobile"
+        {% if form_data.get('device_used') == 'mobile' %}selected{% endif %}>
+        Mobile
+    </option>
+
+    <option value="tablet"
+        {% if form_data.get('device_used') == 'tablet' %}selected{% endif %}>
+        Tablet
+    </option>
+</select>
+</div>
 
         <div class="form-card">
 
