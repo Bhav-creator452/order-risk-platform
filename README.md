@@ -228,25 +228,24 @@ source .venv/bin/activate
 
 ---
 
-# ⚙ Environment Variables
+# ⚙️ Environment Variables
 
 Create a `.env` file in the project root.
-
-Example
 
 ```text
 API_KEY=your_secure_api_key
 
 MODEL_PATH=models/Random_Forest_model.joblib
-
 FEATURE_NAMES_PATH=models/feature_names.joblib
-
 SCALER_PATH=models/scaler.joblib
+
+SDK_BASE_URL=http://127.0.0.1:8000
 ```
 
 ---
+# 🚀 Running the Application
 
-# ▶ Running the API
+## ▶ Running the API
 
 ```bash
 uvicorn app.app:app --reload
@@ -269,6 +268,39 @@ ReDoc
 ```
 http://127.0.0.1:8000/redoc
 ```
+
+## 🌐 Running the Storefront
+
+The project includes a web-based storefront that allows users to submit orders through a graphical interface instead of calling the API directly.
+
+### Step 1: Start the FastAPI backend
+
+```bash
+uvicorn app.app:app --reload
+```
+
+The API will be available at:
+
+```
+http://127.0.0.1:8000
+```
+
+### Step 2: Start the Storefront
+
+Open a new terminal and run:
+
+```bash
+cd storefront
+python app.py
+```
+
+The storefront will be available at:
+
+```
+http://127.0.0.1:5000
+```
+
+> **Note:** The FastAPI backend and the storefront must be running simultaneously. The storefront communicates with the API to perform fraud risk predictions.
 
 ---
 
@@ -533,22 +565,33 @@ The API has been manually tested for the following scenarios.
 
 # 🎬 Demo
 
-The platform was tested using representative low-, medium-, and high-risk orders to validate the complete prediction pipeline. Each request passes through authentication, validation, preprocessing, and the trained model before returning a structured risk assessment.
+The complete application consists of both the FastAPI backend and the web storefront.
 
-| Order       | Prediction | Risk Level | Fraud Probability |
-|-------------|------------|------------|------------------:|
-| Low Risk    | Legitimate | LOW        | 13.97%            |
-| Medium Risk | Fraud      | MEDIUM     | 55.99%            |
-| High Risk   | Fraud      | HIGH       | 78.11%            |
+Demo workflow:
 
-These examples demonstrate how the API differentiates between varying levels of fraud risk.
+1. Start the FastAPI server.
+2. Launch the storefront application.
+3. Open the storefront in a browser.
+4. Fill in an order form.
+5. Submit the order.
+6. The storefront sends the request to the FastAPI API.
+7. The API validates the request, preprocesses the features, performs model inference, and returns the fraud prediction.
+8. The prediction is displayed on the storefront.
+
+The API was tested using representative low-, medium-, and high-risk orders to demonstrate different fraud risk levels.
+
+
 
 # 📈 Example Workflow
 
 ```
-Client
+User
    │
-POST /score
+   ▼
+Storefront (Web UI)
+   │
+   ▼
+FastAPI REST API
    │
    ▼
 API Key Authentication
@@ -560,10 +603,13 @@ Request Validation
 Feature Engineering
    │
    ▼
-Random Forest Prediction
+Random Forest Model
    │
    ▼
-JSON Response
+Prediction Response
+   │
+   ▼
+Displayed in Storefront
 ```
 
 ---
