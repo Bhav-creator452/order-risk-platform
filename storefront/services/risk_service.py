@@ -7,8 +7,6 @@ client = OrderRiskClient(
     api_key=SDK_API_KEY,
 )
 
-print(f"SDK API Key Loaded: {SDK_API_KEY is not None}")
-
 def score_order(form_data):
     """
     Build an order and send it to the SDK.
