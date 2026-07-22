@@ -40,40 +40,40 @@ The API accepts an order, validates the request, performs the same preprocessing
 
 ---
 
-## Architecture 
 
 ## 🏗️ Architecture
 
 ```mermaid
 flowchart TD
-    A([Client Application]) --> B[Python SDK (Optional)]
-    B --> C[FastAPI REST API]
+    A(["Client Application"]) --> B["Python SDK (Optional)"]
+    B --> C["FastAPI REST API"]
 
-    C --> D[API Key Authentication]
-    D --> E[Request Validation<br/>(Pydantic)]
-    E --> F[Feature Engineering]
+    C --> D["API Key Authentication"]
+    D --> E["Request Validation<br/>(Pydantic)"]
+    E --> F["Feature Engineering"]
 
-    F --> F1[Rename Columns]
-    F --> F2[Date Features]
-    F --> F3[Address Matching]
-    F --> F4[One-Hot Encoding]
-    F --> F5[Feature Alignment]
-    F --> F6[Standard Scaling]
+    F --> F1["Rename Columns"]
+    F --> F2["Date Features"]
+    F --> F3["Address Matching"]
+    F --> F4["One-Hot Encoding"]
+    F --> F5["Feature Alignment"]
+    F --> F6["Standard Scaling"]
 
-    F1 --> G[Random Forest Classifier]
+    F1 --> G["Random Forest Classifier"]
     F2 --> G
     F3 --> G
     F4 --> G
     F5 --> G
     F6 --> G
 
-    G --> H[Prediction Response]
+    G --> H["Prediction Response"]
 
-    H --> H1[Prediction]
-    H --> H2[Label]
-    H --> H3[Risk Level]
-    H --> H4[Fraud Probability]
-    H --> H5[Confidence]
+    H --> H1["Prediction"]
+    H --> H2["Label"]
+    H --> H3["Risk Level"]
+    H --> H4["Fraud Probability"]
+    H --> H5["Confidence"]
+
 ```
 ## 🛠 Tech Stack
 
