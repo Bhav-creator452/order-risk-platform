@@ -39,11 +39,6 @@ def home():
             "%d %b %Y • %I:%M %p"
 )
 
-            print("\n===== PREDICTION RESULT =====")
-            for key, value in result.items():
-                print(f"{key:20}: {value}")
-            print("=" * 35)
-
         except Exception as e:
             error = str(e)
             print(f"Error: {error}")
